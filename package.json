@@ -1,5 +1,5 @@
 {
-  "name": "Holiday-Plugin",
+  "name": "holiday-plugin",
   "version": "0.1.0",
   "scripts": {
     "dev": "webpack --mode development --watch",
