@@ -3,10 +3,19 @@ import { v4 as uuidv4 } from "uuid";
 import { AdditionInput } from "./AdditionInput";
 import { InputList } from "./InputList";
 
+const createRow = () => {
+  const newRow = {
+    id: uuidv4(),
+    srcField: "",
+    daysNum: null,
+    selectBeforeAfter: "",
+    destField: "",
+  };
+  return newRow;
+};
+
 export const ConfigPage = () => {
-  const [rows, setRows] = useState<Row[]>([
-    { id: uuidv4(), value: "", boor: true },
-  ]);
+  const [rows, setRows] = useState<Row[]>([createRow()]);
 
   useEffect(() => {
     console.log(rows);
@@ -14,17 +23,10 @@ export const ConfigPage = () => {
 
   type Row = {
     id: string;
-    value: string;
-    boor: boolean;
-  };
-
-  const handleChange = (
-    index: number,
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const newRows = [...rows];
-    newRows[index].value = event.target.value;
-    setRows(newRows);
+    srcField: string;
+    daysNum: number;
+    selectBeforeAfter: string;
+    destField: string;
   };
 
   const handleRemoveRow = (index: number) => {
@@ -40,14 +42,14 @@ export const ConfigPage = () => {
     // ここでフォーム送信時の処理を定義
   };
 
-  const addParentState = (newValue: string) => {
-    const newRow = { id: uuidv4(), value: newValue, boor: true };
-    setRows([newRow, ...rows]);
+  const addParentState = (newValue: Row) => {
+    // const newRow = createRow();
+    setRows([newValue, ...rows]);
   };
 
-  const updateParentState = (index: number, newValue: string) => {
+  const updateParentState = (index: number, newValue: Row) => {
     const newRows = [...rows];
-    newRows[index].value = newValue;
+    newRows[index] = newValue;
     setRows(newRows);
   };
 
