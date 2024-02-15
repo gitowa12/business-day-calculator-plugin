@@ -1,5 +1,10 @@
 import React from "react";
+import { ConfigPage } from "./components/ConfigPage";
 
-export const App: React.VFC = () => {
-  return <div className="text-4xl text-red-500">Hello World!</div>;
+export const App = () => {
+  return (
+    <div>
+      <ConfigPage></ConfigPage>
+    </div>
+  );
 };

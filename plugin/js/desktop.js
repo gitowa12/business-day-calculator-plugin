@@ -1,3 +1,1 @@
-(function (PLUGIN_ID) {
-  kintone.events.on("app.record.index.show", () => {});
-})(kintone.$PLUGIN_ID);
+(function (PLUGIN_ID) {})(kintone.$PLUGIN_ID);

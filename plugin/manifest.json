@@ -1,22 +1,22 @@
 {
-  "manifest_version": 1,
-  "version": 1,
-  "type": "APP",
-  "desktop": {
-    "js": ["js/desktop.js"],
-    "css": ["css/desktop.css"]
-  },
-  "icon": "image/icon.png",
-  "config": {
-    "html": "html/config.html",
-    "js": ["js/config.js"],
-    "css": ["css/config.css"]
-  },
   "name": {
     "en": "Holiday-Plugin",
     "ja": "営業日計算プラグイン"
   },
   "description": {
     "en": "Holiday-Plugin"
+  },
+  "manifest_version": 1,
+  "version": 1,
+  "type": "APP",
+  "icon": "image/icon.png",
+  "desktop": {
+    "js": ["js/desktop.js"],
+    "css": ["css/desktop.css"]
+  },
+  "config": {
+    "html": "html/config.html",
+    "js": ["js/config.js"],
+    "css": ["css/config.css"]
   }
 }
