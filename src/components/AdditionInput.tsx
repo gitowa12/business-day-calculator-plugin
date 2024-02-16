@@ -49,49 +49,54 @@ export const AdditionInput = ({ addParentState }) => {
   };
 
   return (
-    <div className="  border-2  border-gray-300 border-l-8 border-l-blue-500 rounded-lg px-4 py-2 flex items-end w-fit min-w-[950px]">
-      <input
-        id="srcField"
-        // ref={inputRef}
-        className="w-36 border-2 rounded-lg px-1 py-0.5 mr-2 "
-        type="text"
-        value={addRowValue.srcField}
-        onChange={(e) => handleChange(e.target.id, e.target.value)}
-      />
-      <p className="mr-2">フィールドの</p>
-      <input
-        id="daysNum"
-        type="number"
-        className="w-16 border-2 rounded-lg px-1 py-0.5 mr-2"
-        value={addRowValue.daysNum}
-        onChange={(e) => handleChange(e.target.id, e.target.value)}
-      />
-      <p className="mr-2">営業日</p>
-      <select
-        id="selectBeforeAfter"
-        className="text-black w-16 border-2 rounded-lg px-1 py-0.5 mr-2 disabled:text-black"
-        value={addRowValue.selectBeforeAfter}
-        onChange={(e) => handleChange(e.target.id, e.target.value)}
-      >
-        <option value="before">前</option>
-        <option value="after">後</option>
-      </select>
-      <p className="mr-2">の日付を</p>
-      <input
-        id="destField"
-        className=" w-36 border-2 rounded-lg px-1 py-0.5 mr-2 "
-        type="text"
-        value={addRowValue.destField}
-        onChange={(e) => handleChange(e.target.id, e.target.value)}
-      />
-      <p className="mr-2">に表示</p>
-      <button
-        type="button" // フォームの送信を防ぐために type="button" を明示的に指定
-        className="bg-blue-600 hover:bg-blue-500 text-white rounded px-4 py-2 mr-2"
-        onClick={() => handleAddRow(addRowValue)}
-      >
-        Add
-      </button>
+    <div className="flex items-center">
+      <div className="  border-2  border-gray-300 border-l-8 border-l-blue-500 rounded-lg px-4 py-2 ml  flex items-end w-fit mr-2">
+        <input
+          id="srcField"
+          // ref={inputRef}
+          className="w-36 border-2 rounded-lg px-1 py-0.5 mr-2 "
+          type="text"
+          value={addRowValue.srcField}
+          onChange={(e) => handleChange(e.target.id, e.target.value)}
+        />
+        <p className="mr-2">フィールドの</p>
+        <input
+          id="daysNum"
+          type="number"
+          className="w-16 border-2 rounded-lg px-1 py-0.5 mr-2"
+          value={addRowValue.daysNum}
+          onChange={(e) => handleChange(e.target.id, e.target.value)}
+        />
+        <p className="mr-2">営業日</p>
+        <select
+          id="selectBeforeAfter"
+          className="text-black w-16 border-2 rounded-lg px-1 py-0.5 mr-2 disabled:text-black"
+          value={addRowValue.selectBeforeAfter}
+          onChange={(e) => handleChange(e.target.id, e.target.value)}
+        >
+          <option value="before">前</option>
+          <option value="after">後</option>
+        </select>
+        <p className="mr-2">の日付を</p>
+
+        <input
+          id="destField"
+          className=" w-36 border-2 rounded-lg px-1 py-0.5 mr-2 "
+          type="text"
+          value={addRowValue.destField}
+          onChange={(e) => handleChange(e.target.id, e.target.value)}
+        />
+        <p className="mr-2">に表示</p>
+      </div>
+      <div className="py-2  ">
+        <button
+          type="button" // フォームの送信を防ぐために type="button" を明示的に指定
+          className="text-white rounded px-2 py-1  border-2 border-blue-600 bg-blue-600 hover:bg-blue-500 hover:border-blue-500"
+          onClick={() => handleAddRow(addRowValue)}
+        >
+          追加
+        </button>
+      </div>
     </div>
   );
 };

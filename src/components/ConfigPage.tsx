@@ -55,37 +55,24 @@ export const ConfigPage = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <AdditionInput addParentState={addParentState}></AdditionInput>
-      {rows.map((row, index, boor) => (
-        <div key={row.id}>
-          <InputList
-            row={row}
-            index={index}
-            handleRemoveRow={handleRemoveRow}
-            updateParentState={updateParentState}
-          ></InputList>
-          {/* <input
-            className="border-2 rounded-lg px-4 py-2 mr-2 mb-2"
-            type="text"
-            value={row.value}
-            onChange={(e) => handleChange(index, e)}
-          />
-          <button
-            type="button" // 同上
-            className="border-2 border-yellow-600 rounded text-yellow-600 px-4 py-2 mr-2"
-            onClick={() => handleRemoveRow(index)}
-          >
-            Edit
-          </button>
-          <button
-            type="button" // 同上
-            className="border-2 border-red-700 rounded text-red-700 px-4 py-2"
-            onClick={() => handleRemoveRow(index)}
-          >
-            Remove
-          </button> */}
+      <div className="w-fit min-w-[900px]">
+        <div className="mb-4">
+          <AdditionInput addParentState={addParentState}></AdditionInput>
         </div>
-      ))}
+        <hr className="border-4 rounded-lg mb-4  " />
+        <div>
+          {rows.map((row, index) => (
+            <div key={row.id}>
+              <InputList
+                row={row}
+                index={index}
+                handleRemoveRow={handleRemoveRow}
+                updateParentState={updateParentState}
+              ></InputList>
+            </div>
+          ))}
+        </div>
+      </div>
     </form>
   );
 };
