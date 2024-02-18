@@ -8,6 +8,9 @@ import {
   arrayMove,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { GetConfig } from "./services/GetConfig";
+
+const config = GetConfig();
 
 const createRow = () => {
   const newRow = {
@@ -21,7 +24,7 @@ const createRow = () => {
 };
 
 export const ConfigPage = () => {
-  const [rows, setRows] = useState<Row[]>([createRow()]);
+  const [rows, setRows] = useState<Row[]>(config || [createRow()]);
 
   useEffect(() => {
     console.log("rows", rows);
@@ -76,9 +79,25 @@ export const ConfigPage = () => {
       setRows(newRows);
     }
   };
+
+  const handleSave = () => {
+    // 保存する設定情報を作成
+    let config = {};
+    rows.forEach((el, index) => {
+      config[`key${index}`] = JSON.stringify(el);
+    });
+
+    // kintoneの設定情報を保存するメソッドを呼び出す
+    kintone.plugin.app.setConfig(config);
+    //検証用（前のページに自動で飛ばない）
+    // kintone.plugin.app.setConfig(config, () => {
+    //   console.log(config);
+    // });
+  };
+
   return (
     <form onSubmit={handleSubmit}>
-      <div className="w-fit min-w-[980px]">
+      <div className="w-fit min-w-[980px] mb-4">
         <div className="mb-4">
           <AdditionInput addParentState={addParentState}></AdditionInput>
         </div>
@@ -102,6 +121,22 @@ export const ConfigPage = () => {
             </SortableContext>
           </DndContext>
         </div>
+      </div>
+      <div>
+        <button
+          type="submit" // 同上
+          className="text-white rounded px-2 py-1  border-2 border-blue-600 bg-blue-600 hover:bg-blue-500 hover:border-blue-500 mr-2"
+          onClick={handleSave}
+        >
+          保存
+        </button>
+        <button
+          type="button" // 同上
+          className="border-2 border-red-700 rounded text-red-700 px-2 py-1"
+          onClick={}
+        >
+          キャンセル
+        </button>
       </div>
     </form>
   );

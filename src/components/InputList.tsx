@@ -25,7 +25,7 @@ export const InputList = ({
     selectBeforeAfter: string;
     destField: string;
   };
-  const [isReadOnly, setIsReadOnly] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
   const inputRef = useRef(null);
 
   const handleChange = (id: string, newValue: any) => {
@@ -49,7 +49,7 @@ export const InputList = ({
   };
 
   const handleEdit = () => {
-    setIsReadOnly(false); // readOnlyを解除
+    setIsDisabled(false); // Disabledを解除
     // next tickでinput要素にフォーカスを設定
     setTimeout(() => inputRef.current && inputRef.current.focus(), 0);
   };
@@ -57,7 +57,7 @@ export const InputList = ({
   const handleSave = (index: number) => {
     updateParentState(index, rowValue);
     console.log("Saving changes...");
-    setIsReadOnly(true); // 保存後、再度readOnlyをtrueに設定
+    setIsDisabled(true); // 保存後、再度Disabledをtrueに設定
   };
 
   return (
@@ -85,7 +85,7 @@ export const InputList = ({
           type="text"
           value={rowValue.srcField}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
-          disabled={isReadOnly}
+          disabled={isDisabled}
         />
         <p className="mr-2">フィールドの</p>
         <input
@@ -94,7 +94,7 @@ export const InputList = ({
           className="w-16 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
           value={rowValue.daysNum}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
-          disabled={isReadOnly}
+          disabled={isDisabled}
         />
         <p className="mr-2">営業日</p>
         <select
@@ -102,7 +102,7 @@ export const InputList = ({
           className="text-black w-16 border-2 rounded-lg px-1 py-0.5 mr-2 disabled:text-black outline-blue-500"
           value={rowValue.selectBeforeAfter}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
-          disabled={isReadOnly}
+          disabled={isDisabled}
         >
           <option value="before">前</option>
           <option value="after">後</option>
@@ -114,12 +114,12 @@ export const InputList = ({
           type="text"
           value={rowValue.destField}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
-          disabled={isReadOnly}
+          disabled={isDisabled}
         />
         <p className="mr-2">に表示</p>
       </div>
       <div className="flex items-center py-2">
-        {isReadOnly ? (
+        {isDisabled ? (
           <button
             type="button" // 同上
             className="border-2 border-yellow-600 rounded text-yellow-600 px-2 py-1 mr-2 outline-blue-500"
