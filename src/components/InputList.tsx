@@ -1,4 +1,7 @@
+import { useSortable } from "@dnd-kit/sortable";
 import React, { useRef, useState } from "react";
+import { CSS } from "@dnd-kit/utilities";
+import { RxDragHandleDots2 } from "react-icons/rx";
 
 export const InputList = ({
   row,
@@ -6,6 +9,14 @@ export const InputList = ({
   handleRemoveRow,
   updateParentState,
 }) => {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: row.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   const [rowValue, setRowValue] = useState<Row>(row);
   type Row = {
     id: string;
@@ -50,30 +61,45 @@ export const InputList = ({
   };
 
   return (
-    <div key={row.id} className="flex items-center ">
-      <div className="  border-2  border-gray-300 border-l-8 border-l-blue-500 rounded-lg px-4 py-2 mb-2 mr-2 flex items-end w-fit">
+    <div
+      key={row.id}
+      ref={setNodeRef}
+      style={style}
+      className="flex items-center mb-2"
+    >
+      {/* <div
+        className="w-6 h-14 bg-blue-500  rounded-l-lg mb-2 "
+        {...attributes}
+        {...listeners}
+      ></div> */}
+      <RxDragHandleDots2
+        className="size-10 focus:outline-none"
+        {...attributes}
+        {...listeners}
+      />
+      <div className="h-14 border-2  border-gray-300 border-l-8 border-l-blue-500 rounded-lg px-4 py-2 mr-2 flex items-center w-fit">
         <input
           id="srcField"
           ref={inputRef}
-          className="w-36 border-2 rounded-lg px-1 py-0.5 mr-2 "
+          className="w-36 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
           type="text"
           value={rowValue.srcField}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
-          readOnly={isReadOnly}
+          disabled={isReadOnly}
         />
         <p className="mr-2">フィールドの</p>
         <input
           id="daysNum"
           type="number"
-          className="w-16 border-2 rounded-lg px-1 py-0.5 mr-2"
+          className="w-16 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
           value={rowValue.daysNum}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
-          readOnly={isReadOnly}
+          disabled={isReadOnly}
         />
         <p className="mr-2">営業日</p>
         <select
           id="selectBeforeAfter"
-          className="text-black w-16 border-2 rounded-lg px-1 py-0.5 mr-2 disabled:text-black"
+          className="text-black w-16 border-2 rounded-lg px-1 py-0.5 mr-2 disabled:text-black outline-blue-500"
           value={rowValue.selectBeforeAfter}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
           disabled={isReadOnly}
@@ -84,19 +110,19 @@ export const InputList = ({
         <p className="mr-2">の日付を</p>
         <input
           id="destField"
-          className=" w-36 border-2 rounded-lg px-1 py-0.5 mr-2 "
+          className=" w-36 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
           type="text"
           value={rowValue.destField}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
-          readOnly={isReadOnly}
+          disabled={isReadOnly}
         />
         <p className="mr-2">に表示</p>
       </div>
-      <div className="flex items-center  py-2 mb-2 ">
+      <div className="flex items-center py-2">
         {isReadOnly ? (
           <button
             type="button" // 同上
-            className="border-2 border-yellow-600 rounded text-yellow-600 px-2 py-1 mr-2"
+            className="border-2 border-yellow-600 rounded text-yellow-600 px-2 py-1 mr-2 outline-blue-500"
             onClick={handleEdit}
           >
             編集

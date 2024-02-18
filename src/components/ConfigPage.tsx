@@ -2,6 +2,12 @@ import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AdditionInput } from "./AdditionInput";
 import { InputList } from "./InputList";
+import { DndContext } from "@dnd-kit/core";
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
 
 const createRow = () => {
   const newRow = {
@@ -18,7 +24,7 @@ export const ConfigPage = () => {
   const [rows, setRows] = useState<Row[]>([createRow()]);
 
   useEffect(() => {
-    console.log(rows);
+    console.log("rows", rows);
   }, [rows]);
 
   type Row = {
@@ -53,24 +59,48 @@ export const ConfigPage = () => {
     setRows(newRows);
   };
 
+  const handleDragEnd = (e: { active: any; over: any }) => {
+    const { active, over } = e;
+    console.log("dragEndEvent", e);
+    console.log("rows00", rows);
+
+    if (active.id !== over.id) {
+      // const oldIndex = rows.indexOf(active.id);
+      const fromIndex = rows.findIndex((row) => row.id === active.id);
+      console.log("fromIndex", fromIndex);
+      // const newIndex = rows.indexOf(over.id);
+      const toIndex = rows.findIndex((row) => row.id === over.id);
+      console.log("toIndex", toIndex);
+      const newRows = arrayMove(rows, fromIndex, toIndex);
+      console.log("newRows", newRows);
+      setRows(newRows);
+    }
+  };
   return (
     <form onSubmit={handleSubmit}>
-      <div className="w-fit min-w-[900px]">
+      <div className="w-fit min-w-[980px]">
         <div className="mb-4">
           <AdditionInput addParentState={addParentState}></AdditionInput>
         </div>
         <hr className="border-4 rounded-lg mb-4  " />
         <div>
-          {rows.map((row, index) => (
-            <div key={row.id}>
-              <InputList
-                row={row}
-                index={index}
-                handleRemoveRow={handleRemoveRow}
-                updateParentState={updateParentState}
-              ></InputList>
-            </div>
-          ))}
+          <DndContext onDragEnd={handleDragEnd}>
+            <SortableContext
+              items={rows}
+              strategy={verticalListSortingStrategy}
+            >
+              {rows.map((row, index) => (
+                <div key={row.id}>
+                  <InputList
+                    row={row}
+                    index={index}
+                    handleRemoveRow={handleRemoveRow}
+                    updateParentState={updateParentState}
+                  ></InputList>
+                </div>
+              ))}
+            </SortableContext>
+          </DndContext>
         </div>
       </div>
     </form>
