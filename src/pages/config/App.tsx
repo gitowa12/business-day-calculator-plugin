@@ -1,5 +1,5 @@
 import React from "react";
-import { ConfigPage } from "./pages/ConfigPage";
+import { ConfigPage } from "../../components/ConfigPage";
 
 export const App = () => {
   return (

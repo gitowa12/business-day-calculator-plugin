@@ -3,10 +3,15 @@ const KintonePlugin = require("@kintone/webpack-plugin-kintone-plugin");
 
 module.exports = {
   mode: "development",
-  entry: "./src/index.tsx",
+  entry: {
+    desktop: "./src/pages/desktop/index.js",
+    config: "./src/pages/config/index.tsx",
+  },
   output: {
     path: path.resolve(__dirname, "plugin", "js"),
-    filename: "config.js",
+    filename: (pathData) => {
+      return pathData.chunk.name === "config" ? "config.js" : "desktop.js";
+    },
   },
   module: {
     rules: [

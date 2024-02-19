@@ -76,7 +76,7 @@ export const AdditionInput = ({ addParentState }) => {
       <div className="py-2  ">
         <button
           type="button" // フォームの送信を防ぐために type="button" を明示的に指定
-          className="text-white rounded px-2 py-1  border-2 border-blue-600 bg-blue-600 hover:bg-blue-500 hover:border-blue-500"
+          className="text-white rounded px-3 py-2  border-2 border-blue-600 bg-blue-600 hover:bg-blue-500 hover:border-blue-500"
           onClick={() => handleAddRow(addRowValue)}
         >
           追加

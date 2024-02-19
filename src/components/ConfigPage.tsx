@@ -108,14 +108,14 @@ export const ConfigPage = () => {
       <div>
         <button
           type="submit" // 同上
-          className="text-white rounded px-2 py-1  border-2 border-blue-600 bg-blue-600 hover:bg-blue-500 hover:border-blue-500 mr-2"
+          className="text-white rounded px-3 py-2  border-2 border-blue-600 bg-blue-600 hover:bg-blue-500 hover:border-blue-500 mr-2"
           onClick={handleSave}
         >
           保存
         </button>
         <button
           type="button" // 同上
-          className="border-2 border-red-700 rounded text-red-700 px-2 py-1"
+          className="border-2 border-red-700 rounded text-red-700 px-3 py-2 "
           // onClick={}
         >
           キャンセル
