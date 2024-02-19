@@ -8,20 +8,11 @@ import {
   arrayMove,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { GetConfig } from "./services/GetConfig";
+import { GetConfig } from "../services/GetConfig";
+import { createRow } from "../Utilities/CreateRow";
+import { Row } from "../types/types";
 
 const config = GetConfig();
-
-const createRow = () => {
-  const newRow = {
-    id: uuidv4(),
-    srcField: "",
-    daysNum: null,
-    selectBeforeAfter: "",
-    destField: "",
-  };
-  return newRow;
-};
 
 export const ConfigPage = () => {
   const [rows, setRows] = useState<Row[]>(config || [createRow()]);
@@ -29,14 +20,6 @@ export const ConfigPage = () => {
   useEffect(() => {
     console.log("rows", rows);
   }, [rows]);
-
-  type Row = {
-    id: string;
-    srcField: string;
-    daysNum: number;
-    selectBeforeAfter: string;
-    destField: string;
-  };
 
   const handleRemoveRow = (index: number) => {
     const newRows = [...rows];
@@ -133,7 +116,7 @@ export const ConfigPage = () => {
         <button
           type="button" // 同上
           className="border-2 border-red-700 rounded text-red-700 px-2 py-1"
-          onClick={}
+          // onClick={}
         >
           キャンセル
         </button>

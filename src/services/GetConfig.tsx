@@ -1,4 +1,4 @@
-export const GetConfig: any = () => {
+export const GetConfig = (): any => {
   // 前回の設定の取得とデータの整形
   // console.log(kintone.$PLUGIN_ID);
   const PLUGIN_ID = kintone.$PLUGIN_ID;

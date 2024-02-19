@@ -1,26 +1,11 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-
-const createRow = () => {
-  const newRow = {
-    id: uuidv4(),
-    srcField: "",
-    daysNum: null,
-    selectBeforeAfter: "",
-    destField: "",
-  };
-  return newRow;
-};
+import { createRow } from "../Utilities/CreateRow";
+import { Row } from "../types/types";
 
 export const AdditionInput = ({ addParentState }) => {
   const [addRowValue, setAddRowValue] = useState<Row>(createRow()); // 変数名をキャメルケースに修正
-  type Row = {
-    id: string;
-    srcField: string;
-    daysNum: number;
-    selectBeforeAfter: string;
-    destField: string;
-  };
+
   // console.log(addRowValue);
   const handleChange = (id: string, newValue: any) => {
     if (id === "srcField") {
