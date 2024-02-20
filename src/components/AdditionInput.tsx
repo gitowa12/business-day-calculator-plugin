@@ -17,8 +17,8 @@ export const AdditionInput = ({ addParentState }) => {
       const newRow = { ...addRowValue, daysNum: newValue };
       setAddRowValue(newRow);
       return;
-    } else if (id === "selectBeforeAfter") {
-      const newRow = { ...addRowValue, selectBeforeAfter: newValue };
+    } else if (id === "beforeOrAfter") {
+      const newRow = { ...addRowValue, beforeOrAfter: newValue };
       setAddRowValue(newRow);
       return;
     } else if (id === "destField") {
@@ -54,9 +54,9 @@ export const AdditionInput = ({ addParentState }) => {
         />
         <p className="mr-2">営業日</p>
         <select
-          id="selectBeforeAfter"
+          id="beforeOrAfter"
           className="text-black w-16 border-2 rounded-lg px-1 py-0.5 mr-2 disabled:text-black outline-blue-500"
-          value={addRowValue.selectBeforeAfter}
+          value={addRowValue.beforeOrAfter}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
         >
           <option value="before">前</option>

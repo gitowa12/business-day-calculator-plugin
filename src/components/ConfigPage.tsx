@@ -13,6 +13,7 @@ import { createRow } from "../Utilities/CreateRow";
 import { Row } from "../types/types";
 
 const config = GetConfig();
+console.log("config", config);
 
 export const ConfigPage = () => {
   const [rows, setRows] = useState<Row[]>(config || [createRow()]);

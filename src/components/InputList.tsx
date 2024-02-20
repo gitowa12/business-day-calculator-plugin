@@ -2,6 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import React, { useRef, useState } from "react";
 import { CSS } from "@dnd-kit/utilities";
 import { RxDragHandleDots2 } from "react-icons/rx";
+import { Row } from "../types/types";
 
 export const InputList = ({
   row,
@@ -9,6 +10,7 @@ export const InputList = ({
   handleRemoveRow,
   updateParentState,
 }) => {
+  //dnd-kit
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: row.id });
 
@@ -18,13 +20,6 @@ export const InputList = ({
   };
 
   const [rowValue, setRowValue] = useState<Row>(row);
-  type Row = {
-    id: string;
-    srcField: string;
-    daysNum: number;
-    selectBeforeAfter: string;
-    destField: string;
-  };
   const [isDisabled, setIsDisabled] = useState(true);
   const inputRef = useRef(null);
 
@@ -37,8 +32,8 @@ export const InputList = ({
       const newRow = { ...rowValue, daysNum: newValue };
       setRowValue(newRow);
       return;
-    } else if (id === "selectBeforeAfter") {
-      const newRow = { ...rowValue, selectBeforeAfter: newValue };
+    } else if (id === "beforeOrAfter") {
+      const newRow = { ...rowValue, beforeOrAfter: newValue };
       setRowValue(newRow);
       return;
     } else if (id === "destField") {
@@ -98,9 +93,9 @@ export const InputList = ({
         />
         <p className="mr-2">営業日</p>
         <select
-          id="selectBeforeAfter"
+          id="beforeOrAfter"
           className="text-black w-16 border-2 rounded-lg px-1 py-0.5 mr-2 disabled:text-black outline-blue-500"
-          value={rowValue.selectBeforeAfter}
+          value={rowValue.beforeOrAfter}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
           disabled={isDisabled}
         >
