@@ -54,13 +54,13 @@ import { GetConfig } from "../../services/GetConfig";
 
   // 営業日数前の日付を計算する関数
   // 営業日とは、週末（土・日）および指定された祝日以外の日を指す
-  const calcuBizDaysBefore = (startDate, numBizDays, holidays) => {
+  const calcuBizDaysBefore = (startDate, daysNum, holidays) => {
     let currentDate = new Date(startDate);
     console.log("currentDate", currentDate);
-    console.log("numBizDayz", numBizDays);
+    console.log("numBizDayz", daysNum);
     let bizDaysCount = 0;
     // 指定された営業日数に達するまで日付を1日ずつ減算
-    while (bizDaysCount < numBizDays) {
+    while (bizDaysCount < daysNum) {
       currentDate = addDays(currentDate, -1); // 前の日に移動
       // その日が営業日である場合（週末でも祝日でもない場合）、営業日カウントを増やす
       if (!isWeekend(currentDate) && !isHoliday(currentDate, holidays)) {
@@ -73,11 +73,11 @@ import { GetConfig } from "../../services/GetConfig";
 
   // 指定された営業日数後の日付を計算する関数
   // 営業日とは、週末（土・日）および指定された祝日以外の日を指す
-  const calcuBizDaysAfter = (startDate, numBizDays, holidays) => {
+  const calcuBizDaysAfter = (startDate, daysNum, holidays) => {
     let currentDate = new Date(startDate);
     let bizDaysCount = 0;
     // 指定された営業日数に達するまで日付を1日ずつ加算
-    while (bizDaysCount < numBizDays) {
+    while (bizDaysCount < daysNum) {
       currentDate = addDays(currentDate, 1); // 次の日に移動
       // その日が営業日である場合（週末でも祝日でもない場合）、営業日カウントを増やす
       if (!isWeekend(currentDate) && !isHoliday(currentDate, holidays)) {
@@ -122,16 +122,27 @@ import { GetConfig } from "../../services/GetConfig";
       // console.log("events", events);
       kintone.events.on(events, (event) => {
         // console.log("Hello,change");
+
         config.forEach((el, index) => {
+          if (
+            el.srcField === "" ||
+            el.daysNum === ("" || null) ||
+            el.destField === ""
+          ) {
+            return;
+          }
           const srcField = el.srcField;
           // console.log("srcField", srcField);
           const daysNum = el.daysNum;
           const beforeOrAfter = el.beforeOrAfter;
           const destField = el.destField;
-
-          if (event.record[srcField].value === undefined || null || "") {
-            return;
-          }
+          // if (
+          //   event.record[srcField].value === "" ||
+          //   event.record[daysNum].value === (null || "") ||
+          //   event.record[destField].value === ""
+          // ) {
+          //   return;
+          // }
           const startDate = checkDateFormat(event.record[srcField].value);
           console.log("startDate", startDate);
           let result = "";

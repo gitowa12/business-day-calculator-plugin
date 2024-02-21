@@ -26,10 +26,8 @@ export const ConfigPage = () => {
 
   const handleRemoveRow = (index: number) => {
     const newRows = [...rows];
-    if (rows.length > 1) {
-      newRows.splice(index, 1);
-      setRows(newRows);
-    }
+    newRows.splice(index, 1);
+    setRows(newRows);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -71,13 +69,12 @@ export const ConfigPage = () => {
     let obj = {};
 
     obj[`key0`] = JSON.stringify(appId);
-
     rows.forEach((el, index) => {
       obj[`key${index + 1}`] = JSON.stringify(el);
     });
 
     // kintoneの設定情報を保存するメソッドを呼び出す
-    // kintone.plugin.app.setConfig(config);
+    // kintone.plugin.app.setConfig(obj);
     //検証用（前のページに自動で飛ばない）
     kintone.plugin.app.setConfig(obj, () => {
       console.log("savedconfig", obj);

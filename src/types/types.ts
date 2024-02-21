@@ -2,7 +2,7 @@
 export type Row = {
   id: string;
   srcField: string;
-  daysNum: number | null;
+  daysNum: number | "";
   beforeOrAfter: string;
   destField: string;
 };
