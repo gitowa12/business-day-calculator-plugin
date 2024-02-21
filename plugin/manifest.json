@@ -1,10 +1,10 @@
 {
   "name": {
-    "en": "Holiday-Plugin",
+    "en": "BizDayCalc-Plugin",
     "ja": "営業日計算プラグイン"
   },
   "description": {
-    "en": "Holiday-Plugin"
+    "en": "BizDayCalc-Plugin"
   },
   "manifest_version": 1,
   "version": 1,

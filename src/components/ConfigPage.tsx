@@ -12,12 +12,14 @@ import { GetConfig } from "../services/GetConfig";
 import { createRow } from "../Utilities/CreateRow";
 import { Row } from "../types/types";
 
-const config = GetConfig();
-console.log("config", config);
+const beforeConfig = GetConfig();
+const beforeAppId = beforeConfig.shift(); //先頭のappiIdだけ切り取る
+// console.log("beforeAppId", beforeAppId);
+// console.log("beforeConfig", beforeConfig);
 
 export const ConfigPage = () => {
-  const [rows, setRows] = useState<Row[]>(config || [createRow()]);
-
+  const [appId, setAppId] = useState(beforeAppId);
+  const [rows, setRows] = useState<Row[]>(beforeConfig || [createRow()]);
   useEffect(() => {
     console.log("rows", rows);
   }, [rows]);
@@ -66,22 +68,36 @@ export const ConfigPage = () => {
 
   const handleSave = () => {
     // 保存する設定情報を作成
-    let config = {};
+    let obj = {};
+
+    obj[`key0`] = JSON.stringify(appId);
+
     rows.forEach((el, index) => {
-      config[`key${index}`] = JSON.stringify(el);
+      obj[`key${index + 1}`] = JSON.stringify(el);
     });
 
     // kintoneの設定情報を保存するメソッドを呼び出す
-    kintone.plugin.app.setConfig(config);
+    // kintone.plugin.app.setConfig(config);
     //検証用（前のページに自動で飛ばない）
-    // kintone.plugin.app.setConfig(config, () => {
-    //   console.log(config);
-    // });
+    kintone.plugin.app.setConfig(obj, () => {
+      console.log("savedconfig", obj);
+    });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="w-fit min-w-[980px] mb-4">
+        <div className="flex items-center mb-2 py-2 px-2 w-fit">
+          <p className="mr-2">カレンダーアプリのID : </p>
+          <input
+            id="srcAppId"
+            className="w-16 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
+            type="number"
+            min={0}
+            value={appId}
+            onChange={(e) => setAppId(e.target.value)}
+          />
+        </div>
         <div className="mb-4">
           <AdditionInput addParentState={addParentState}></AdditionInput>
         </div>

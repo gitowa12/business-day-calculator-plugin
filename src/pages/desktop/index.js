@@ -4,11 +4,12 @@ import { GetConfig } from "../../services/GetConfig";
 
 ((PLUGIN_ID) => {
   const config = GetConfig();
+  const appId = config.shift();
   console.log("config", config);
   const client = new KintoneRestAPIClient();
 
   const holidayAppParam = {
-    app: 9,
+    app: appId,
     fields: ["祝日"],
   };
 
@@ -23,7 +24,7 @@ import { GetConfig } from "../../services/GetConfig";
       const holidays = resp.map((record) => {
         return record.祝日.value;
       });
-      console.log("holidays", holidays);
+      // console.log("holidays", holidays);
       return holidays;
     } catch (error) {
       console.log(error);
@@ -55,6 +56,8 @@ import { GetConfig } from "../../services/GetConfig";
   // 営業日とは、週末（土・日）および指定された祝日以外の日を指す
   const calcuBizDaysBefore = (startDate, numBizDays, holidays) => {
     let currentDate = new Date(startDate);
+    console.log("currentDate", currentDate);
+    console.log("numBizDayz", numBizDays);
     let bizDaysCount = 0;
     // 指定された営業日数に達するまで日付を1日ずつ減算
     while (bizDaysCount < numBizDays) {
@@ -64,6 +67,7 @@ import { GetConfig } from "../../services/GetConfig";
         bizDaysCount++;
       }
     }
+    console.log("currentDate", currentDate);
     return currentDate.toISOString().split("T")[0]; // YYYY-MM-DD 形式で返す
   };
 
@@ -93,11 +97,11 @@ import { GetConfig } from "../../services/GetConfig";
       const month = ("0" + (dateObj.getMonth() + 1)).slice(-2); // 月は0から始まるため、+1する
       const day = ("0" + dateObj.getDate()).slice(-2);
       const result = `${year}-${month}-${day}`;
-      console.log("checkedDate", result); // YYYY-MM-DD形式の日付}
+      // console.log("checkedDate", result); // YYYY-MM-DD形式の日付}
       return result;
     }
     // 変換後のsrcFieldを使用する
-    console.log("checkedDate", date); // YYYY-MM-DD形式の日付}
+    // console.log("checkedDate", date); // YYYY-MM-DD形式の日付}
     return date;
   };
 
@@ -106,22 +110,19 @@ import { GetConfig } from "../../services/GetConfig";
     ["app.record.create.show", "app.record.edit.show"],
     async (event) => {
       const holidays = await getHoliday(holidayAppParam);
-      console.log("holidayss", holidays);
+      console.log("holidays", holidays);
       //フィールドの値変更イベントを作成する。
-      const srcFieldAllay = config.map((el) => {
-        return el.srcField;
-      });
+      const srcFieldAllay = config.map((el) => el.srcField);
       console.log("srcFieldAllay", srcFieldAllay);
       let events = [];
       srcFieldAllay.forEach((el) => {
         events.push(`app.record.edit.change.${el}`);
         events.push(`app.record.create.change.${el}`);
       });
-      console.log("events", events);
-      console.log("aaa", event.record["日時_元"]);
+      // console.log("events", events);
       kintone.events.on(events, (event) => {
         // console.log("Hello,change");
-        config.forEach((el) => {
+        config.forEach((el, index) => {
           const srcField = el.srcField;
           // console.log("srcField", srcField);
           const daysNum = el.daysNum;

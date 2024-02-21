@@ -6,7 +6,7 @@ export const createRow = (): Row => {
   const newRow: Row = {
     id: uuidv4(),
     srcField: "",
-    daysNum: null,
+    daysNum: undefined,
     beforeOrAfter: "",
     destField: "",
   };
