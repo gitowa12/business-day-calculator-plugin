@@ -51,7 +51,6 @@ export const InputList = ({
 
   const handleSave = (index: number) => {
     updateParentState(index, rowValue);
-    console.log("Saving changes...");
     setIsDisabled(true); // 保存後、再度Disabledをtrueに設定
   };
 

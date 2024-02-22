@@ -13,10 +13,6 @@ import { GetConfig } from "../../services/GetConfig";
     fields: ["祝日"],
   };
 
-  // // 実行ユーザー指定
-  // const user = kintone.getLoginUser().code;
-  // const users = ["Administrator", "towadev12@gmail.com"];
-
   // 祝祭日取得
   const getHoliday = async (param) => {
     try {
@@ -113,7 +109,7 @@ import { GetConfig } from "../../services/GetConfig";
 
       //フィールドの値変更イベント
       kintone.events.on(events, (event) => {
-        //変更されたフィールド名を抽出
+        //イベント発火元のフィールドを抽出
         console.log("event", event);
         const eventFieldArray = event.type.split("change.");
         const eventField = eventFieldArray[1];

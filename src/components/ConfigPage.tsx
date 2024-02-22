@@ -130,7 +130,7 @@ export const ConfigPage = () => {
         <button
           type="button" // 同上
           className="border-2 border-red-700 rounded text-red-700 px-3 py-2 "
-          // onClick={}
+          onClick={() => history.back()}
         >
           キャンセル
         </button>
