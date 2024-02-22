@@ -11,6 +11,7 @@ import {
 import { GetConfig } from "../services/GetConfig";
 import { createRow } from "../Utilities/CreateRow";
 import { Row } from "../types/types";
+import Swal from "sweetalert2";
 
 const beforeConfig = GetConfig();
 const beforeAppId = beforeConfig.shift(); //先頭のappiIdだけ切り取る
@@ -20,8 +21,13 @@ const beforeAppId = beforeConfig.shift(); //先頭のappiIdだけ切り取る
 export const ConfigPage = () => {
   const [appId, setAppId] = useState(beforeAppId);
   const [rows, setRows] = useState<Row[]>(beforeConfig || [createRow()]);
-
-  const handleRemoveRow = (index: number) => {
+  const [onEdit, setOnEdit] = useState<onEdit[]>([]);
+  type onEdit = {
+    id?: string;
+  };
+  console.log("onEdit", onEdit);
+  const handleRemoveRow = (id: string, index: number) => {
+    setOnEditState(id, "delete");
     const newRows = [...rows];
     newRows.splice(index, 1);
     setRows(newRows);
@@ -43,6 +49,16 @@ export const ConfigPage = () => {
     setRows(newRows);
   };
 
+  const setOnEditState = (id: string, type: string) => {
+    let newData = [];
+    if (type === "done" || type === "delete") {
+      newData = onEdit.filter((el) => el !== id);
+    } else if (type === "edit") {
+      newData = [...onEdit, id];
+    }
+    setOnEdit(newData);
+  };
+
   const handleDragEnd = (e: { active: any; over: any }) => {
     const { active, over } = e;
     console.log("dragEndEvent", e);
@@ -62,6 +78,20 @@ export const ConfigPage = () => {
   };
 
   const handleSave = () => {
+    if (onEdit.length > 0) {
+      Swal.fire({
+        title: "保存エラー",
+        text: "編集中の項目があります。編集を完了してください。",
+        icon: "error",
+        showClass: {
+          popup: "swal2-show",
+          backdrop: "swal2-backdrop-show",
+          icon: "",
+        },
+        confirmButtonColor: "#2563eb",
+      });
+      return;
+    }
     // 保存する設定情報を作成
     let obj = {};
 
@@ -109,6 +139,7 @@ export const ConfigPage = () => {
                     index={index}
                     handleRemoveRow={handleRemoveRow}
                     updateParentState={updateParentState}
+                    setOnEditState={setOnEditState}
                   ></InputList>
                 </div>
               ))}
