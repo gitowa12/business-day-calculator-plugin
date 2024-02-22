@@ -20,9 +20,6 @@ const beforeAppId = beforeConfig.shift(); //先頭のappiIdだけ切り取る
 export const ConfigPage = () => {
   const [appId, setAppId] = useState(beforeAppId);
   const [rows, setRows] = useState<Row[]>(beforeConfig || [createRow()]);
-  useEffect(() => {
-    console.log("rows", rows);
-  }, [rows]);
 
   const handleRemoveRow = (index: number) => {
     const newRows = [...rows];

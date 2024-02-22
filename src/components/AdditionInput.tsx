@@ -4,13 +4,11 @@ import { createRow } from "../Utilities/CreateRow";
 import { Row } from "../types/types";
 
 export const AdditionInput = ({ addParentState }) => {
-  const [addRowValue, setAddRowValue] = useState<Row>(createRow()); // 変数名をキャメルケースに修正
+  const [addRowValue, setAddRowValue] = useState<Row>(createRow());
 
-  // console.log(addRowValue);
   const handleChange = (id: string, newValue: any) => {
     if (id === "srcField") {
       const newRow = { ...addRowValue, srcField: newValue };
-      console.log("newRow", newRow);
       setAddRowValue(newRow);
       return;
     } else if (id === "daysNum") {

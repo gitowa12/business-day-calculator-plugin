@@ -94,6 +94,7 @@ import { GetConfig } from "../../services/GetConfig";
   kintone.events.on(
     ["app.record.create.show", "app.record.edit.show"],
     async (event) => {
+      //祝日情報を取得
       const holidays = await getHoliday(holidayAppParam);
       console.log("holidays", holidays);
 
