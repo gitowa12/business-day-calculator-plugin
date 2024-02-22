@@ -95,7 +95,7 @@ export const ConfigPage = () => {
             onChange={(e) => setAppId(e.target.value)}
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 ml-10">
           <AdditionInput addParentState={addParentState}></AdditionInput>
         </div>
         <hr className="border-4 rounded-lg mb-4  " />

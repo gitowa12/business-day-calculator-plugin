@@ -78,6 +78,7 @@ export const InputList = ({
           ref={inputRef}
           className="w-36 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
           type="text"
+          placeholder="FieldCode"
           value={rowValue.srcField}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
           disabled={isDisabled}
@@ -107,6 +108,7 @@ export const InputList = ({
           id="destField"
           className=" w-36 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
           type="text"
+          placeholder="FieldCode"
           value={rowValue.destField}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
           disabled={isDisabled}

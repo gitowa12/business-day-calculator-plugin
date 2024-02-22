@@ -1,5 +1,5 @@
 {
-  "name": "holiday-plugin",
+  "name": "business-day-calculator-plugin",
   "version": "0.1.0",
   "scripts": {
     "dev": "webpack --mode development --watch",

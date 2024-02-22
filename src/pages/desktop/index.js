@@ -52,38 +52,27 @@ import { GetConfig } from "../../services/GetConfig";
     return holidays.includes(formattedDate); // 祝日リストに含まれているかチェック
   };
 
-  // 営業日数前の日付を計算する関数
-  // 営業日とは、週末（土・日）および指定された祝日以外の日を指す
-  const calcuBizDaysBefore = (startDate, daysNum, holidays) => {
-    let currentDate = new Date(startDate);
-    console.log("currentDate", currentDate);
-    console.log("numBizDayz", daysNum);
-    let bizDaysCount = 0;
-    // 指定された営業日数に達するまで日付を1日ずつ減算
-    while (bizDaysCount < daysNum) {
-      currentDate = addDays(currentDate, -1); // 前の日に移動
-      // その日が営業日である場合（週末でも祝日でもない場合）、営業日カウントを増やす
-      if (!isWeekend(currentDate) && !isHoliday(currentDate, holidays)) {
-        bizDaysCount++;
-      }
-    }
-    console.log("currentDate", currentDate);
-    return currentDate.toISOString().split("T")[0]; // YYYY-MM-DD 形式で返す
-  };
-
   // 指定された営業日数後の日付を計算する関数
   // 営業日とは、週末（土・日）および指定された祝日以外の日を指す
-  const calcuBizDaysAfter = (startDate, daysNum, holidays) => {
+  const calcuBizDays = (startDate, daysNum, beforeOrAfter, holidays) => {
+    let moveNumber = undefined;
+    if (beforeOrAfter === "before") {
+      moveNumber = -1;
+    } else if (beforeOrAfter === "after") {
+      moveNumber = 1;
+    }
     let currentDate = new Date(startDate);
     let bizDaysCount = 0;
+
     // 指定された営業日数に達するまで日付を1日ずつ加算
     while (bizDaysCount < daysNum) {
-      currentDate = addDays(currentDate, 1); // 次の日に移動
+      currentDate = addDays(currentDate, moveNumber); // 前の日に移動
       // その日が営業日である場合（週末でも祝日でもない場合）、営業日カウントを増やす
       if (!isWeekend(currentDate) && !isHoliday(currentDate, holidays)) {
         bizDaysCount++;
       }
     }
+
     // 計算後の日付をYYYY-MM-DD形式で返す
     return currentDate.toISOString().split("T")[0];
   };
@@ -111,49 +100,55 @@ import { GetConfig } from "../../services/GetConfig";
     async (event) => {
       const holidays = await getHoliday(holidayAppParam);
       console.log("holidays", holidays);
-      //フィールドの値変更イベントを作成する。
-      const srcFieldAllay = config.map((el) => el.srcField);
-      console.log("srcFieldAllay", srcFieldAllay);
+
+      //フィールドの値変更イベントを作成
+      const srcFieldArray = config.map((el) => el.srcField);
+      console.log("srcFieldArray", srcFieldArray);
       let events = [];
-      srcFieldAllay.forEach((el) => {
+      srcFieldArray.forEach((el) => {
         events.push(`app.record.edit.change.${el}`);
         events.push(`app.record.create.change.${el}`);
       });
       // console.log("events", events);
-      kintone.events.on(events, (event) => {
-        // console.log("Hello,change");
 
-        config.forEach((el, index) => {
-          if (
-            el.srcField === "" ||
-            el.daysNum === ("" || null) ||
-            el.destField === ""
-          ) {
-            return;
-          }
-          const srcField = el.srcField;
-          // console.log("srcField", srcField);
-          const daysNum = el.daysNum;
-          const beforeOrAfter = el.beforeOrAfter;
-          const destField = el.destField;
-          // if (
-          //   event.record[srcField].value === "" ||
-          //   event.record[daysNum].value === (null || "") ||
-          //   event.record[destField].value === ""
-          // ) {
-          //   return;
-          // }
-          const startDate = checkDateFormat(event.record[srcField].value);
-          console.log("startDate", startDate);
-          let result = "";
-          if (beforeOrAfter === "before") {
-            result = calcuBizDaysBefore(startDate, daysNum, holidays);
-          } else if (beforeOrAfter === "after") {
-            result = calcuBizDaysAfter(startDate, daysNum, holidays);
-          }
-          console.log("result", result);
-          event.record[destField].value = result;
-        });
+      //フィールドの値変更イベント
+      kintone.events.on(events, (event) => {
+        //変更されたフィールド名を抽出
+        console.log("event", event);
+        const eventFieldArray = event.type.split("change.");
+        const eventField = eventFieldArray[1];
+        console.log("eventField", eventField);
+
+        //抽出したフィールド名を持つ設定行のみを抽出
+        const targetConfig = config.find((el) => el.srcField === eventField);
+        console.log("find", find);
+
+        //設定行に未入力の項目があれば、処理を中断する
+        if (
+          targetConfig.srcField === "" ||
+          targetConfig.daysNum === ("" || null) ||
+          targetConfig.destField === ""
+        ) {
+          return;
+        }
+
+        //設定値をそれぞれ代入して営業日計算処理を実行
+        const srcField = targetConfig.srcField;
+        console.log("srcField", srcField);
+        const daysNum = targetConfig.daysNum;
+        const beforeOrAfter = targetConfig.beforeOrAfter;
+        const destField = targetConfig.destField;
+        console.log("desiField", destField);
+        console.log("srcField.value", event.record[srcField].value);
+        const startDate = checkDateFormat(event.record[srcField].value);
+        console.log("startDate", startDate);
+        const result = calcuBizDays(
+          startDate,
+          daysNum,
+          beforeOrAfter,
+          holidays
+        );
+        event.record[destField].value = result; //計算結果を結果表示先フィールドに設定する
         return event;
       });
     }

@@ -42,6 +42,7 @@ export const AdditionInput = ({ addParentState }) => {
           className="w-36 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
           type="text"
           value={addRowValue.srcField}
+          placeholder="FieldCode"
           onChange={(e) => handleChange(e.target.id, e.target.value)}
         />
         <p className="mr-2">フィールドの</p>
@@ -68,6 +69,7 @@ export const AdditionInput = ({ addParentState }) => {
           id="destField"
           className=" w-36 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
           type="text"
+          placeholder="FieldCode"
           value={addRowValue.destField}
           onChange={(e) => handleChange(e.target.id, e.target.value)}
         />
