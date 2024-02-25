@@ -9,6 +9,7 @@ export const InputList = ({
   index,
   handleRemoveRow,
   updateParentState,
+  setOnEditState,
 }) => {
   //dnd-kit
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -45,11 +46,13 @@ export const InputList = ({
 
   const handleEdit = () => {
     setIsDisabled(false); // Disabledを解除
+    setOnEditState(row.id, "edit");
     // next tickでinput要素にフォーカスを設定
     setTimeout(() => inputRef.current && inputRef.current.focus(), 0);
   };
 
   const handleSave = (index: number) => {
+    setOnEditState(row.id, "done");
     updateParentState(index, rowValue);
     setIsDisabled(true); // 保存後、再度Disabledをtrueに設定
   };
@@ -118,7 +121,7 @@ export const InputList = ({
         {isDisabled ? (
           <button
             type="button" // 同上
-            className=" border-2 border-yellow-600 rounded text-yellow-600 px-3 py-2  mr-2 outline-blue-500"
+            className=" border-2 border-yellow-600 rounded-lg text-yellow-600 px-3 py-2  mr-2  hover:bg-yellow-50 transition"
             onClick={handleEdit}
           >
             編集
@@ -126,7 +129,7 @@ export const InputList = ({
         ) : (
           <button
             type="button"
-            className="border-2 border-green-600 rounded text-green-600 px-3 py-2  mr-2"
+            className="border-2 border-green-600 rounded text-white bg-green-600 px-3 py-2  mr-2"
             onClick={() => {
               handleSave(index);
             }}
@@ -136,8 +139,8 @@ export const InputList = ({
         )}
         <button
           type="button" // 同上
-          className="border-2 border-red-700 rounded text-red-700 px-3 py-2 "
-          onClick={() => handleRemoveRow(index)}
+          className="border-2 border-red-700 rounded text-red-700 px-3 py-2 hover:bg-red-50 transition"
+          onClick={() => handleRemoveRow(row.id, index)}
         >
           削除
         </button>
