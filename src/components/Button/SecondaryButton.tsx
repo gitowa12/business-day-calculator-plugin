@@ -34,7 +34,7 @@ export const SecondaryButton: React.FC<ButtonProps> = ({
     gray: "text-gray-600 border-gray-600 hover:bg-gray-600 hover:text-white",
   };
 
-  const styles = `rounded-lg border transition ${className} ${sizeClasses[size]} ${colorClasses[color]}`;
+  const styles = `shadow rounded-lg border transition ${className} ${sizeClasses[size]} ${colorClasses[color]}`;
 
   return (
     <button className={styles} onClick={onClick}>
