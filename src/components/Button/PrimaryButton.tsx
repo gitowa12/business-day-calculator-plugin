@@ -36,7 +36,7 @@ export const PrimaryButton: React.FC<ButtonProps> = ({
   };
 
   // ボタンのスタイルを決定
-  const styles = ` shadow rounded-lg shadow transition ${className} ${sizeClasses[size]} ${colorClasses[color]}`;
+  const styles = ` shadow rounded-lg shadow transition  ${className} ${sizeClasses[size]} ${colorClasses[color]}`;
 
   return (
     <button className={styles} onClick={onClick}>
