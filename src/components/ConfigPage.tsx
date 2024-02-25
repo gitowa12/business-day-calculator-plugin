@@ -25,36 +25,36 @@ export const ConfigPage = () => {
   type onEdit = {
     id?: string;
   };
-  useEffect(() => {
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [rows, appId, onEdit]);
-  const handleBeforeUnload = (e: any) => {
-    if (beforeAppId !== appId) {
-      e.preventDefault();
-      e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します
-      return;
-    }
-    if (beforeConfig.length !== rows.length) {
-      e.preventDefault();
-      e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します。
-      return;
-    }
-    for (let i = 0; i < beforeConfig.length; i++) {
-      if (beforeConfig[i] !== rows[i]) {
-        e.preventDefault();
-        e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します。
-        return;
-      }
-    }
-    if (onEdit.length > 0) {
-      e.preventDefault();
-      e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します。
-      return;
-    }
-  };
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", handleBeforeUnload);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", handleBeforeUnload);
+  //   };
+  // }, [rows, appId, onEdit]);
+  // const handleBeforeUnload = (e: any) => {
+  //   if (beforeAppId !== appId) {
+  //     e.preventDefault();
+  //     e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します
+  //     return;
+  //   }
+  //   if (beforeConfig.length !== rows.length) {
+  //     e.preventDefault();
+  //     e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します。
+  //     return;
+  //   }
+  //   for (let i = 0; i < beforeConfig.length; i++) {
+  //     if (beforeConfig[i] !== rows[i]) {
+  //       e.preventDefault();
+  //       e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します。
+  //       return;
+  //     }
+  //   }
+  //   if (onEdit.length > 0) {
+  //     e.preventDefault();
+  //     e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します。
+  //     return;
+  //   }
+  // };
 
   console.log("onEdit", onEdit);
   const handleRemoveRow = (id: string, index: number) => {
@@ -132,11 +132,11 @@ export const ConfigPage = () => {
     });
 
     // kintoneの設定情報を保存するメソッドを呼び出す
-    // kintone.plugin.app.setConfig(obj);
+    kintone.plugin.app.setConfig(obj);
     //検証用（前のページに自動で飛ばない）
-    kintone.plugin.app.setConfig(obj, () => {
-      console.log("savedconfig", obj);
-    });
+    // kintone.plugin.app.setConfig(obj, () => {
+    //   console.log("savedconfig", obj);
+    // });
   };
 
   return (
