@@ -16,7 +16,7 @@ import Swal from "sweetalert2";
 const beforeConfig = GetConfig();
 const beforeAppId = beforeConfig.shift(); //先頭のappiIdだけ切り取る
 // console.log("beforeAppId", beforeAppId);
-// console.log("beforeConfig", beforeConfig);
+console.log("beforeConfig", beforeConfig);
 
 export const ConfigPage = () => {
   const [appId, setAppId] = useState(beforeAppId);
@@ -25,6 +25,37 @@ export const ConfigPage = () => {
   type onEdit = {
     id?: string;
   };
+  useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [rows, appId, onEdit]);
+  const handleBeforeUnload = (e: any) => {
+    if (beforeAppId !== appId) {
+      e.preventDefault();
+      e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します
+      return;
+    }
+    if (beforeConfig.length !== rows.length) {
+      e.preventDefault();
+      e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します。
+      return;
+    }
+    for (let i = 0; i < beforeConfig.length; i++) {
+      if (beforeConfig[i] !== rows[i]) {
+        e.preventDefault();
+        e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します。
+        return;
+      }
+    }
+    if (onEdit.length > 0) {
+      e.preventDefault();
+      e.returnValue = ""; // この設定でブラウザはユーザーに確認ダイアログを表示します。
+      return;
+    }
+  };
+
   console.log("onEdit", onEdit);
   const handleRemoveRow = (id: string, index: number) => {
     setOnEditState(id, "delete");
@@ -112,7 +143,7 @@ export const ConfigPage = () => {
     <form onSubmit={handleSubmit}>
       <div className="w-fit min-w-[980px] mb-4">
         <div className="flex items-center mb-2 py-2 px-2 w-fit">
-          <p className="mr-2">カレンダーアプリのID : </p>
+          <p className="mr-2">祝祭日管理アプリのID : </p>
           <input
             id="srcAppId"
             className="w-16 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
@@ -150,14 +181,14 @@ export const ConfigPage = () => {
       <div>
         <button
           type="submit" // 同上
-          className="text-white rounded px-3 py-2  border-2 border-blue-600 bg-blue-600 hover:bg-blue-500 hover:border-blue-500 mr-2"
+          className="text-white rounded px-3 py-2  border-2 border-blue-600 bg-blue-600 hover:bg-blue-700 hover:border-blue-500 mr-2"
           onClick={handleSave}
         >
           保存
         </button>
         <button
           type="button" // 同上
-          className="border-2 border-red-700 rounded text-red-700 px-3 py-2 "
+          className="border-2 border-red-700 rounded text-red-700 px-3 py-2 hover:bg-red-50 transition"
           onClick={() => history.back()}
         >
           キャンセル

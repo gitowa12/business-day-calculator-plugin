@@ -121,7 +121,7 @@ export const InputList = ({
         {isDisabled ? (
           <button
             type="button" // 同上
-            className=" border-2 border-yellow-600 rounded text-yellow-600 px-3 py-2  mr-2 outline-blue-500"
+            className=" border-2 border-yellow-600 rounded-lg text-yellow-600 px-3 py-2  mr-2  hover:bg-yellow-50 transition"
             onClick={handleEdit}
           >
             編集
@@ -139,7 +139,7 @@ export const InputList = ({
         )}
         <button
           type="button" // 同上
-          className="border-2 border-red-700 rounded text-red-700 px-3 py-2 "
+          className="border-2 border-red-700 rounded text-red-700 px-3 py-2 hover:bg-red-50 transition"
           onClick={() => handleRemoveRow(row.id, index)}
         >
           削除
