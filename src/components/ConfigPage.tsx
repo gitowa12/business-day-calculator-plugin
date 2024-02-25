@@ -145,7 +145,7 @@ export const ConfigPage = () => {
     <form onSubmit={handleSubmit}>
       <div className="w-fit min-w-[980px] mb-4">
         <div className="flex items-center mb-2 py-2 px-2 w-fit">
-          <p className="mr-2">祝祭日管理アプリのID : </p>
+          <p className="font-bold mr-2">祝祭日管理アプリのID : </p>
           <input
             id="srcAppId"
             className="w-16 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
