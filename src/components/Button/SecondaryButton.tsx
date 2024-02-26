@@ -25,16 +25,17 @@ export const SecondaryButton: React.FC<ButtonProps> = ({
   };
 
   const colorClasses = {
-    blue: "text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white",
-    red: "text-red-600 border-red-600 hover:bg-red-600 hover:text-white",
+    // blue: "text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white",
+    blue: "text-blue-600 outline-blue-600 hover:bg-blue-600  hover:text-white",
+    red: "text-red-600 outline-red-600 hover:bg-red-600 hover:text-white",
     yellow:
-      "text-yellow-600 border-yellow-600 hover:bg-yellow-600 hover:text-white",
+      "text-yellow-600 outline-yellow-600 hover:bg-yellow-600 hover:text-white",
     green:
-      "text-green-600 border-green-600 hover:bg-green-600 hover:text-white",
-    gray: "text-gray-600 border-gray-600 hover:bg-gray-600 hover:text-white",
+      "text-green-600 outline-green-600 hover:bg-green-600 hover:text-white",
+    gray: "text-gray-600 outline-gray-600 hover:bg-gray-600 hover:text-white",
   };
 
-  const styles = `shadow rounded-lg border transition ${className} ${sizeClasses[size]} ${colorClasses[color]}`;
+  const styles = `shadow rounded-lg outline outline-2 outline-offset-[-1px] transition  ${className} ${sizeClasses[size]} ${colorClasses[color]}`;
 
   return (
     <button className={styles} onClick={onClick}>

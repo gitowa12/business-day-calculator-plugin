@@ -180,7 +180,7 @@ export const ConfigPage = () => {
           </DndContext>
         </div>
       </div>
-      <div className="space-x-2">
+      <div className="flex items-center space-x-2">
         <PrimaryButton onClick={handleSave}>保存</PrimaryButton>
         <PrimaryButton color={"red"} onClick={() => history.back()}>
           キャンセル

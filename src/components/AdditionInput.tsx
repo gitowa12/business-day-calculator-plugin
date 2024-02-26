@@ -38,7 +38,7 @@ export const AdditionInput = ({ addParentState }) => {
 
   return (
     <div id={addRowValue.id} className="flex items-center">
-      <div className="  h-14 border-2  border-gray-300 border-l-8 border-l-blue-500 rounded-lg px-4 py-2 mr-2 flex items-center  w-fit ">
+      <div className="   border-2 shadow bg-white border-gray-300 border-l-8 border-l-blue-500 rounded-lg px-4 py-2 mr-2 flex items-center  w-fit ">
         <input
           id="srcField"
           // ref={inputRef}
