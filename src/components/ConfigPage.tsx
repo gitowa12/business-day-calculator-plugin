@@ -12,6 +12,8 @@ import { GetConfig } from "../services/GetConfig";
 import { createRow } from "../Utilities/CreateRow";
 import { Row } from "../types/types";
 import Swal from "sweetalert2";
+import { PrimaryButton } from "./Button/PrimaryButton";
+import { SecondaryButton } from "./Button/SecondaryButton";
 
 const beforeConfig = GetConfig();
 const beforeAppId = beforeConfig.shift(); //先頭のappiIdだけ切り取る
@@ -143,7 +145,7 @@ export const ConfigPage = () => {
     <form onSubmit={handleSubmit}>
       <div className="w-fit min-w-[980px] mb-4">
         <div className="flex items-center mb-2 py-2 px-2 w-fit">
-          <p className="mr-2">祝祭日管理アプリのID : </p>
+          <p className="font-bold mr-2">祝祭日管理アプリのID : </p>
           <input
             id="srcAppId"
             className="w-16 border-2 rounded-lg px-1 py-0.5 mr-2 outline-blue-500"
@@ -178,21 +180,11 @@ export const ConfigPage = () => {
           </DndContext>
         </div>
       </div>
-      <div>
-        <button
-          type="submit" // 同上
-          className="text-white rounded px-3 py-2  border-2 border-blue-600 bg-blue-600 hover:bg-blue-700 hover:border-blue-500 mr-2"
-          onClick={handleSave}
-        >
-          保存
-        </button>
-        <button
-          type="button" // 同上
-          className="border-2 border-red-700 rounded text-red-700 px-3 py-2 hover:bg-red-50 transition"
-          onClick={() => history.back()}
-        >
+      <div className="flex items-center space-x-2">
+        <PrimaryButton onClick={handleSave}>保存</PrimaryButton>
+        <PrimaryButton color={"red"} onClick={() => history.back()}>
           キャンセル
-        </button>
+        </PrimaryButton>
       </div>
     </form>
   );

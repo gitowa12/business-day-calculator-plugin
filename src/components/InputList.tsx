@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { CSS } from "@dnd-kit/utilities";
 import { RxDragHandleDots2 } from "react-icons/rx";
 import { Row } from "../types/types";
+import { SecondaryButton } from "./Button/SecondaryButton";
 
 export const InputList = ({
   row,
@@ -74,7 +75,7 @@ export const InputList = ({
         {...attributes}
         {...listeners}
       />
-      <div className="h-14 border-2  border-gray-300 border-l-8 border-l-blue-500 rounded-lg px-4 py-2 mr-2 flex items-center w-fit">
+      <div className=" border-2 shadow bg-white border-gray-300 border-l-8 border-l-blue-500 rounded-lg px-4 py-2 mr-2 flex items-center w-fit">
         <input
           id="srcField"
           ref={inputRef}
@@ -117,33 +118,34 @@ export const InputList = ({
         />
         <p className="mr-2">に表示</p>
       </div>
-      <div className="flex items-center py-2">
+      <div className="flex items-center space-x-2">
         {isDisabled ? (
-          <button
-            type="button" // 同上
-            className=" border-2 border-yellow-600 rounded-lg text-yellow-600 px-3 py-2  mr-2  hover:bg-yellow-50 transition"
-            onClick={handleEdit}
-          >
+          // <button
+          //   type="button" // 同上
+          //   className=" border-2 border-yellow-600 rounded-lg text-yellow-600 px-3 py-2  mr-2  hover:bg-yellow-50 transition"
+          //   onClick={handleEdit}
+          // >
+          //   編集
+          // </button>
+          <SecondaryButton color="yellow" onClick={handleEdit}>
             編集
-          </button>
+          </SecondaryButton>
         ) : (
-          <button
-            type="button"
-            className="border-2 border-green-600 rounded text-white bg-green-600 px-3 py-2  mr-2"
+          <SecondaryButton
+            color="green"
             onClick={() => {
               handleSave(index);
             }}
           >
             完了
-          </button>
+          </SecondaryButton>
         )}
-        <button
-          type="button" // 同上
-          className="border-2 border-red-700 rounded text-red-700 px-3 py-2 hover:bg-red-50 transition"
+        <SecondaryButton
+          color="red"
           onClick={() => handleRemoveRow(row.id, index)}
         >
           削除
-        </button>
+        </SecondaryButton>
       </div>
     </div>
   );
