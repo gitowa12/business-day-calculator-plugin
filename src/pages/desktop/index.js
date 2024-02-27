@@ -90,6 +90,16 @@ import { GetConfig } from "../../services/GetConfig";
     return date;
   };
 
+  //kintoneのフィールド変更イベントを生成する関数。引数には対象のフィールドの配列を取る。
+  const generateKintoneEventsArray = (fieldArray) => {
+    let events = [];
+    fieldArray.forEach((el) => {
+      events.push(`app.record.edit.change.${el}`);
+      events.push(`app.record.create.change.${el}`);
+    });
+    return events;
+  };
+
   // if (users.includes(user)) {}
   kintone.events.on(
     ["app.record.create.show", "app.record.edit.show"],
@@ -101,11 +111,7 @@ import { GetConfig } from "../../services/GetConfig";
       //フィールドの値変更イベントを作成
       const srcFieldArray = config.map((el) => el.srcField);
       console.log("srcFieldArray", srcFieldArray);
-      let events = [];
-      srcFieldArray.forEach((el) => {
-        events.push(`app.record.edit.change.${el}`);
-        events.push(`app.record.create.change.${el}`);
-      });
+      const events = generateKintoneEventsArray(srcFieldArray);
       // console.log("events", events);
 
       //フィールドの値変更イベント
